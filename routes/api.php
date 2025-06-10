@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
 
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', function () {
@@ -19,6 +18,8 @@ Route::get('/test', function() {
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/profile', [ProfileController::class, 'profile']);
+Route::middleware('auth:sanctum')->put('/profile', [ProfileController::class, 'update']);
+
 Route::middleware('auth:sanctum')->group(function () {
     // Categorías
     Route::get('/categories', [CategoryController::class, 'index']);
@@ -32,6 +33,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
-
-//Route::middleware('auth:sanctum')->get('/profile', [AuthController::class, 'profile']);
-//Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
