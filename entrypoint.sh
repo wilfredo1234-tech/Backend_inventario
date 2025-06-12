@@ -20,9 +20,9 @@ done
 
 echo "Base de datos disponible. Ejecutando migraciones..."
 
-# Generar clave y migraciones
+# Generar clave y migraciones con seed y --force
 php artisan key:generate --force
-php artisan migrate --force
+php artisan migrate:fresh --seed --force
 
 # Ejecutar Laravel en puerto 8000
 exec php artisan serve --host=0.0.0.0 --port=8000
