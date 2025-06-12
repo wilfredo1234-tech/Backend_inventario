@@ -29,7 +29,7 @@ RUN chmod -R 775 storage bootstrap/cache && \
 
 # Copiar el entrypoint personalizado
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh && dos2unix /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
 
 
 
