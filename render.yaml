@@ -1,12 +1,8 @@
 services:
   - type: web
     name: laravel-inventario
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      cp .env.example .env
-      php artisan key:generate
-      php artisan migrate --force
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    runtime: docker
+    plan: free  # puedes cambiarlo a "starter", "standard", etc. si lo necesitas
     envVars:
       - key: APP_ENV
         value: production
