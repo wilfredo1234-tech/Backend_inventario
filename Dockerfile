@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Instalación de dependencias necesarias
+# Cliente de PostgreSQL necesario para pg_isready
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     libonig-dev \
+    postgresql-client \
     && docker-php-ext-install pdo pdo_pgsql mbstring zip
 
 # Instalar Composer desde otra imagen
@@ -20,20 +21,18 @@ WORKDIR /var/www
 # Copiar todos los archivos del proyecto
 COPY . .
 
-# Instalar dependencias
+# Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Asignar permisos
+# Asignar permisos correctos a carpetas
 RUN chmod -R 775 storage bootstrap/cache && \
     chown -R www-data:www-data .
 
 # Copiar el entrypoint personalizado
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh 
+RUN chmod +x /entrypoint.sh
 
-
-
-# Exponer el puerto
+# Exponer el puerto que usará Laravel
 EXPOSE 8000
 
 # Usar el script como punto de entrada
