@@ -4,7 +4,8 @@ services:
     runtime: php
     buildCommand: |
       composer install --no-dev --optimize-autoloader
-      php artisan config:cache
+      cp .env.example .env
+      php artisan key:generate
       php artisan migrate --force
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
@@ -12,8 +13,6 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
-      - key: APP_KEY
-        generateValue: true
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
