@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
 
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/profile', [ProfileController::class, 'p
 Route::middleware('auth:sanctum')->put('/profile', [ProfileController::class, 'update']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    // Logout
+    Route::post('/logout', [LogoutController::class, 'logout']);
+
     // Categorías
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::post('/categories', [CategoryController::class, 'store']);
