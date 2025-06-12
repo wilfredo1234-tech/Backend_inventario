@@ -2,7 +2,7 @@ services:
   - type: web
     name: laravel-inventario
     runtime: docker
-    plan: free  # puedes cambiarlo a "starter", "standard", etc. si lo necesitas
+    plan: free
     envVars:
       - key: APP_ENV
         value: production
@@ -11,7 +11,7 @@ services:
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        value: dpg-d15ijvjuibrs73c1blr0-a
+        value: dpg-d15ijvjuibrs73c1blr0-a.oregon-postgres.render.com
       - key: DB_PORT
         value: 5432
       - key: DB_DATABASE
@@ -19,4 +19,4 @@ services:
       - key: DB_USERNAME
         value: inventario_db_lek9_user
       - key: DB_PASSWORD
-        value: 12345
+        value: rydajbKvtzLbDPol9l1wmpOfYmtHBdmo
