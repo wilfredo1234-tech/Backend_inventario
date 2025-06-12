@@ -1,7 +1,6 @@
 services:
   - type: web
     name: laravel-inventario
-    runtime: php
     buildCommand: |
       composer install --no-dev --optimize-autoloader
       cp .env.example .env
