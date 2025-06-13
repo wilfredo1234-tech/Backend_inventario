@@ -33,7 +33,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Exponer el puerto que usará Laravel
-EXPOSE 8000
+EXPOSE 80
 
 # Usar el script como punto de entrada
 ENTRYPOINT ["/entrypoint.sh"]

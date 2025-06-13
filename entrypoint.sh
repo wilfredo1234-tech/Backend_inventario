@@ -46,5 +46,5 @@ php artisan route:cache
 php artisan view:cache
 
 echo "==> Iniciando servidor PHP embebido..."
-exec php -S 0.0.0.0:${PORT:-8000} -t public
+exec php -S 0.0.0.0:80 -t public
 
