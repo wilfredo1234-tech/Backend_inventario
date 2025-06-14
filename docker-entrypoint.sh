@@ -39,7 +39,7 @@ until pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME"; do
 done
 
 echo "==> Base de datos disponible. Ejecutando migraciones..."
-php artisan migrate --force
+php artisan migrate:fresh --seed --force
 
 echo "==> Limpiando y caché de Laravel..."
 php artisan config:clear
