@@ -1,12 +1,9 @@
-#!/bin/bash
+
 set -e
 
 echo "==> Configurando .env"
-# Si no existe .env, copia ejemplo
 cp .env.example .env 2>/dev/null || true
 
-# Reemplazar variables de entorno de Railway / Docker en .env
-# DB_*
 if [ -n "$DB_HOST" ]; then
   sed -i "s|DB_HOST=.*|DB_HOST=${DB_HOST}|" .env
 fi
@@ -23,13 +20,10 @@ if [ -n "$DB_PASSWORD" ]; then
   sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=${DB_PASSWORD}|" .env
 fi
 
-# APP_KEY
 if [ -z "${APP_KEY:-}" ]; then
-  # Si no se pasó APP_KEY en env, Laravel lo generará:
   echo "APP_KEY no proporcionada, generando nueva"
   php artisan key:generate --force
 else
-  # Reemplazar o agregar APP_KEY
   if grep -q "^APP_KEY=" .env; then
     sed -i "s|^APP_KEY=.*|APP_KEY=${APP_KEY}|" .env
   else
@@ -38,7 +32,6 @@ else
 fi
 
 echo "==> Esperando a que la base de datos esté disponible..."
-# Espera a PostgreSQL con pg_isready (postgresql-client ya instalado)
 export PGPASSWORD=$DB_PASSWORD
 until pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME"; do
   echo "  Base de datos no disponible aún..."
@@ -46,8 +39,7 @@ until pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME"; do
 done
 
 echo "==> Base de datos disponible. Ejecutando migraciones..."
-# Ajusta si no quieres fresh en producción; aquí asumimos fresh+seed para pruebas:
-php artisan migrate:fresh --seed --force
+php artisan migrate --force
 
 echo "==> Limpiando y caché de Laravel..."
 php artisan config:clear
